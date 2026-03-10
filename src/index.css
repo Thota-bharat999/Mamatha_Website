@@ -100,6 +100,8 @@ ul {
   transition: var(--transition);
   padding: 0 1.5rem;
   border-bottom: 1px solid rgba(242, 183, 5, 0.12);
+  /* Expose navbar height so hero can match padding-top */
+  --navbar-h: 68px;
 }
 
 .navbar.scrolled {
@@ -388,6 +390,8 @@ ul {
   position: relative;
   overflow: hidden;
   padding: 6rem 2rem 3rem;
+  /* Hero top padding = navbar height + breathing room */
+  padding-top: calc(68px + 2.5rem);
 }
 
 .hero::before {
@@ -2101,45 +2105,71 @@ section {
     padding: 3.5rem 1.25rem;
   }
 
-  /* Navbar */
-  .nav-left-group {
+  /* ── Navbar: flex instead of grid prevents element overlap ── */
+  .navbar {
+    padding: 0 1rem;
+  }
+
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
     gap: 0.5rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-left-group {
+    gap: 0.4rem;
+    flex-shrink: 0;
   }
 
   .lang-toggle-btn {
     padding: 0.22rem 0.55rem;
-    font-size: 0.71rem;
+    font-size: 0.7rem;
   }
 
   .nav-logo-img {
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
   }
 
   .nav-brand-name {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
   }
 
   .nav-brand-sub {
     display: none;
   }
 
-  .nav-inner {
-    height: 58px;
+  .hamburger {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .nav-phone {
+    display: none;
   }
 
   .mobile-menu {
-    top: 58px;
+    top: 60px;
   }
 
-  /* Hero: stack vertically, logo above text */
+  /* ── Hero: padding-top matches exact navbar height ── */
   .hero {
-    padding: 4.5rem 1.25rem 3rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-bottom: 3rem;
+    padding-top: calc(60px + 1.75rem);
+    min-height: 100vh;
   }
 
   .hero-inner {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.75rem;
     text-align: left;
   }
 
@@ -2147,15 +2177,12 @@ section {
     order: -1;
     align-items: center;
     width: 100%;
+    padding-top: 0.5rem;
   }
 
   .hero-logo-scene {
-    width: 200px;
-    height: 200px;
-  }
-
-  .hero-badges-row {
-    justify-content: center;
+    width: 195px;
+    height: 195px;
   }
 
   .hero-ring-pulse {
@@ -2166,7 +2193,27 @@ section {
     inset: -13px;
   }
 
-  /* Hero buttons */
+  /* ── Feature badges: centered flex-wrap ── */
+  .hero-badges-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem 0.5rem;
+    width: 100%;
+    max-width: 290px;
+    margin: 0 auto;
+  }
+
+  .hero-badge-pill {
+    flex: 0 1 auto;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.7rem;
+  }
+
+  /* Hero CTA */
   .hero-cta-row {
     flex-direction: column;
     align-items: flex-start;
@@ -2180,13 +2227,13 @@ section {
     text-align: center;
   }
 
-  /* About stats: 2-col on mobile */
+  /* About */
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.75rem;
   }
 
-  /* Services: 1 column on mobile */
+  /* Services */
   .services-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
@@ -2206,7 +2253,7 @@ section {
     padding: 0.75rem 1.5rem 1.25rem;
   }
 
-  /* Highlights bar: allow multi-line */
+  /* Highlights */
   .highlights-bar {
     padding: 0.85rem 1rem;
   }
@@ -2215,7 +2262,7 @@ section {
     font-size: 0.78rem;
   }
 
-  /* Why choose: full width features */
+  /* Why / Feature */
   .feature-card {
     padding: 1rem 1.25rem;
   }
@@ -2231,7 +2278,7 @@ section {
     font-size: 1.2rem;
   }
 
-  /* Contact cards */
+  /* Contact */
   .contact-card {
     padding: 1.25rem;
   }
@@ -2280,6 +2327,18 @@ section {
 
 /* ---- Very small 400px: minimal navbar ---- */
 @media (max-width: 400px) {
+  .navbar {
+    padding: 0 0.75rem;
+  }
+
+  .nav-inner {
+    height: 56px;
+  }
+
+  .mobile-menu {
+    top: 56px;
+  }
+
   .nav-email {
     display: none;
   }
@@ -2290,12 +2349,22 @@ section {
 
   .lang-toggle-btn {
     padding: 0.2rem 0.45rem;
-    font-size: 0.68rem;
+    font-size: 0.67rem;
+  }
+
+  .nav-logo-img {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Hero matches 56px navbar */
+  .hero {
+    padding-top: calc(56px + 1.5rem);
   }
 
   .hero-logo-scene {
-    width: 170px;
-    height: 170px;
+    width: 160px;
+    height: 160px;
   }
 
   .hero-ring-pulse {
@@ -2304,5 +2373,14 @@ section {
 
   .hero-ring-outer {
     inset: -10px;
+  }
+
+  .hero-badges-row {
+    max-width: 240px;
+  }
+
+  .hero-badge-pill {
+    font-size: 0.66rem;
+    padding: 0.22rem 0.6rem;
   }
 }
